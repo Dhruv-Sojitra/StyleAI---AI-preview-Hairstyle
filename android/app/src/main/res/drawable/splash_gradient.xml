@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Base solid color layer -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/mesh_base" />
+        </shape>
+    </item>
+
+    <!-- Top Left Accent Glow -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="80%p"
+                android:centerX="10%"
+                android:centerY="10%"
+                android:startColor="@color/mesh_accent_1"
+                android:endColor="@android:color/transparent" />
+        </shape>
+    </item>
+
+    <!-- Bottom Right Accent Glow -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="100%p"
+                android:centerX="90%"
+                android:centerY="90%"
+                android:startColor="@color/mesh_accent_3"
+                android:endColor="@android:color/transparent" />
+        </shape>
+    </item>
+
+    <!-- Middle Accent Glow (Indigo) -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="70%p"
+                android:centerX="60%"
+                android:centerY="40%"
+                android:startColor="@color/mesh_accent_2"
+                android:endColor="@android:color/transparent" />
+        </shape>
+    </item>
+
+    <!-- Subtle Centered Glow for Icon -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="40%p"
+                android:centerX="50%"
+                android:centerY="50%"
+                android:startColor="#20FFFFFF"
+                android:endColor="@android:color/transparent" />
+        </shape>
+    </item>
+</layer-list>

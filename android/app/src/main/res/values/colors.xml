@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Mesh Gradient Palette -->
+    <color name="mesh_base">#0F172A</color>
+    <color name="mesh_accent_1">#1E1B4B</color>
+    <color name="mesh_accent_2">#312E81</color>
+    <color name="mesh_accent_3">#581C87</color>
+    
+    <!-- Previous colors (for theme consistency) -->
+    <color name="splash_start">#0F172A</color>
+    <color name="splash_end">#4C1D95</color>
+</resources>

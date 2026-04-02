@@ -1,0 +1,29 @@
+{
+    "project_info": {
+        "project_number": "151169884094",
+        "project_id": "aihairstylist-25170",
+        "storage_bucket": "aihairstylist-25170.firebasestorage.app"
+    },
+    "client": [
+        {
+            "client_info": {
+                "mobilesdk_app_id": "1:151169884094:android:b4676f17e6dce3e7e963ef",
+                "android_client_info": {
+                    "package_name": "com.example.ai_hairstyle_preview_app"
+                }
+            },
+            "oauth_client": [],
+            "api_key": [
+                {
+                    "current_key": "AIzaSyBXTkcojaOckQFXTHxxHCf6wk-GEBTLD2A"
+                }
+            ],
+            "services": {
+                "appinvite_service": {
+                    "other_platform_oauth_client": []
+                }
+            }
+        }
+    ],
+    "configuration_version": "1"
+}
