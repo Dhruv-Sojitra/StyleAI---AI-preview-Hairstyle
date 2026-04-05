@@ -11,7 +11,7 @@ class ReplicateService {
   static const bool _useMock = true; 
   
   // Replace with actual API key
-  static const String _replicateApiToken = 'YOUR_API_TOKEN_HERE'; 
+  static const String _replicateApiToken = 'YOUR_REPLICATE_API_TOKEN'; // Replace with your token from https://replicate.com/account/api-tokens
 
   // Use the predictions endpoint
   static const String _modelUrl = 'https://api.replicate.com/v1/predictions';

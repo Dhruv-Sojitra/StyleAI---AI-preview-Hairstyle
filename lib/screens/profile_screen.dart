@@ -3,6 +3,10 @@ import 'package:ai_hairstyle_preview_app/providers/theme_provider.dart';
 import 'package:ai_hairstyle_preview_app/services/auth_service.dart';
 import 'package:ai_hairstyle_preview_app/services/firestore_service.dart';
 import 'package:ai_hairstyle_preview_app/screens/favorites_screen.dart';
+import 'package:ai_hairstyle_preview_app/screens/edit_profile_screen.dart';
+import 'package:ai_hairstyle_preview_app/screens/notification_screen.dart';
+import 'package:ai_hairstyle_preview_app/screens/help_support_screen.dart';
+import 'package:ai_hairstyle_preview_app/screens/about_screen.dart';
 import 'package:ai_hairstyle_preview_app/utils/design_system.dart';
 import 'package:ai_hairstyle_preview_app/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
@@ -130,12 +134,12 @@ class ProfileScreen extends ConsumerWidget {
                 _ProfileTile(
                   icon: Icons.person_outline_rounded,
                   title: 'Edit Profile',
-                  onTap: () {},
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfileScreen())),
                 ),
                 _ProfileTile(
                   icon: Icons.notifications_none_rounded,
                   title: 'Notifications',
-                  onTap: () {},
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationScreen())),
                 ),
                 _ProfileTile(
                   icon: themeMode == ThemeMode.dark ? Icons.dark_mode_rounded : Icons.light_mode_rounded,
@@ -153,12 +157,12 @@ class ProfileScreen extends ConsumerWidget {
                 _ProfileTile(
                   icon: Icons.help_outline_rounded,
                   title: 'Help & Support',
-                  onTap: () {},
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const HelpSupportScreen())),
                 ),
                 _ProfileTile(
                   icon: Icons.info_outline_rounded,
                   title: 'About StyleAI',
-                  onTap: () {},
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutScreen())),
                 ),
                 _ProfileTile(
                   icon: Icons.logout_rounded,

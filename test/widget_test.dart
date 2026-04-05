@@ -1,15 +1,17 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ai_hairstyle_preview_app/main.dart';
-import 'package:ai_hairstyle_preview_app/screens/splash_screen.dart';
 
 void main() {
-  testWidgets('Premium splash screen smoke test', (WidgetTester tester) async {
+  testWidgets('Core initialization smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const ProviderScope(child: MyApp(seenOnboarding: true)));
+    await tester.pumpWidget(const ProviderScope(child: StyleAIApp()));
 
-    // Verify that Splash screen is displayed.
-    expect(find.byType(SplashScreen), findsOneWidget);
+    // Verify that the InitializationWrapper is displayed.
+    expect(find.byType(InitializationWrapper), findsOneWidget);
+    
+    // Check for diagnostic status
+    expect(find.textContaining('Starting StyleAI...'), findsOneWidget);
     
     // Check for branded elements
     expect(find.text('StyleAI'), findsOneWidget);

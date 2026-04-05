@@ -3,7 +3,7 @@ import 'package:ai_hairstyle_preview_app/models/hairstyle_model.dart';
 import 'package:ai_hairstyle_preview_app/services/auth_service.dart';
 import 'package:ai_hairstyle_preview_app/services/cloudinary_service.dart';
 import 'package:ai_hairstyle_preview_app/screens/result_screen.dart';
-import 'package:ai_hairstyle_preview_app/services/fal_service.dart';
+import 'package:ai_hairstyle_preview_app/services/free_ai_service.dart';
 import 'package:ai_hairstyle_preview_app/utils/design_system.dart';
 import 'package:ai_hairstyle_preview_app/widgets/custom_widgets.dart';
 import 'package:ai_hairstyle_preview_app/services/notification_service.dart';
@@ -47,13 +47,24 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
       if (user == null) throw Exception('User not logged in');
 
       final cloudinaryService = ref.read(cloudinaryServiceProvider);
-      final falService = ref.read(falServiceProvider);
+      final freeAiService = ref.read(freeAiServiceProvider);
       
       final String originalUrl = await cloudinaryService.uploadToCloudinary(_imageFile!);
-      final generatedUrl = await falService.generateHairstyleWithFal(
-        originalImageUrl: originalUrl,
-        hairstyleName: widget.selectedHairstyle.name,
-      );
+      
+      String? generatedUrl;
+      bool isDemoMode = false;
+
+      try {
+        final generatedBytes = await freeAiService.generateHairstyleImage(
+          imageBytes: await _imageFile!.readAsBytes(),
+          hairstyle: widget.selectedHairstyle.name,
+        );
+        generatedUrl = await cloudinaryService.uploadToCloudinary(generatedBytes);
+      } catch (e) {
+        debugPrint('⚠️ [Generation] HuggingFace failed, entering Demo Mode: $e');
+        generatedUrl = originalUrl;
+        isDemoMode = true;
+      }
 
       await NotificationService().cancelReminder();
       await NotificationService().showInstantNotification();
@@ -65,8 +76,9 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
             builder: (context) => ResultScreen(
               originalImage: _imageFile!,
               originalImageUrl: originalUrl,
-              generatedImageUrl: generatedUrl,
+              generatedImageUrl: generatedUrl!,
               hairstyle: widget.selectedHairstyle,
+              isDemoMode: isDemoMode,
             ),
           ),
         );

@@ -1,5 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
+import 'dart:io';
 
 class NotificationService {
   static final NotificationService _instance = NotificationService._internal();
@@ -27,6 +28,11 @@ class NotificationService {
       requestSoundPermission: true,
     );
 
+    if (Platform.isWindows) {
+      _isInitialized = true;
+      return;
+    }
+
     const InitializationSettings settings = InitializationSettings(
       android: androidSettings,
       iOS: iosSettings,
@@ -53,6 +59,8 @@ class NotificationService {
   }
 
   Future<void> showInstantNotification() async {
+    if (Platform.isWindows) return;
+    
     const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
       'instant_channel',
       'Instant Notifications',
@@ -105,6 +113,8 @@ class NotificationService {
     ];
     final tipMessage = tips[now.day % tips.length];
 
+    if (Platform.isWindows) return;
+
     await _notificationsPlugin.zonedSchedule(
       1,
       'StyleAI',
@@ -135,6 +145,8 @@ class NotificationService {
       iOS: DarwinNotificationDetails(),
     );
 
+    if (Platform.isWindows) return;
+
     await _notificationsPlugin.zonedSchedule(
       2,
       'StyleAI',
@@ -148,6 +160,7 @@ class NotificationService {
   }
 
   Future<void> cancelReminder() async {
+    if (Platform.isWindows) return;
     await _notificationsPlugin.cancel(2);
   }
 }

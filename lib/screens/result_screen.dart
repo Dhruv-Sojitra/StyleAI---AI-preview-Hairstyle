@@ -15,9 +15,10 @@ import 'package:uuid/uuid.dart';
 
 class ResultScreen extends ConsumerStatefulWidget {
   final File originalImage;
-  final String? originalImageUrl; 
+  final String? originalImageUrl;
   final String generatedImageUrl;
   final HairstyleModel hairstyle;
+  final bool isDemoMode;
 
   const ResultScreen({
     super.key,
@@ -25,6 +26,7 @@ class ResultScreen extends ConsumerStatefulWidget {
     this.originalImageUrl,
     required this.generatedImageUrl,
     required this.hairstyle,
+    this.isDemoMode = false,
   });
 
   @override
@@ -181,6 +183,37 @@ class _ResultScreenState extends ConsumerState<ResultScreen> with SingleTickerPr
               ),
             ),
           ),
+
+          // Demo Mode Banner
+          if (widget.isDemoMode)
+            Positioned(
+              top: MediaQuery.of(context).padding.top + 110,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.orange.withValues(alpha: 0.9),
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(color: Colors.black.withValues(alpha: 0.2), blurRadius: 10, offset: const Offset(0, 4)),
+                    ],
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.info_outline_rounded, color: Colors.white, size: 16),
+                      SizedBox(width: 8),
+                      Text(
+                        'Preview generated (demo mode)',
+                        style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
 
           // Bottom Info & Actions
           Positioned(
