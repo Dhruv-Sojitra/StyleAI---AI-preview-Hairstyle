@@ -22,11 +22,12 @@ class NotificationService {
     const AndroidInitializationSettings androidSettings =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    const DarwinInitializationSettings iosSettings = DarwinInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
-    );
+    const DarwinInitializationSettings iosSettings =
+        DarwinInitializationSettings(
+          requestAlertPermission: true,
+          requestBadgePermission: true,
+          requestSoundPermission: true,
+        );
 
     if (Platform.isWindows) {
       _isInitialized = true;
@@ -40,16 +41,14 @@ class NotificationService {
 
     await _notificationsPlugin.initialize(
       settings,
-      onDidReceiveNotificationResponse: (NotificationResponse response) {
-        // App will automatically come to the foreground
-        // Navigation could be handled here if we had a global navigator key
-      },
+      onDidReceiveNotificationResponse: (NotificationResponse response) {},
     );
 
-    // Request permissions for Android 13+
     final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
-        _notificationsPlugin.resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>();
+        _notificationsPlugin
+            .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin
+            >();
 
     if (androidImplementation != null) {
       await androidImplementation.requestNotificationsPermission();
@@ -60,14 +59,15 @@ class NotificationService {
 
   Future<void> showInstantNotification() async {
     if (Platform.isWindows) return;
-    
-    const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
-      'instant_channel',
-      'Instant Notifications',
-      importance: Importance.max,
-      priority: Priority.high,
-      icon: '@mipmap/ic_launcher',
-    );
+
+    const AndroidNotificationDetails androidDetails =
+        AndroidNotificationDetails(
+          'instant_channel',
+          'Instant Notifications',
+          importance: Importance.max,
+          priority: Priority.high,
+          icon: '@mipmap/ic_launcher',
+        );
 
     const NotificationDetails details = NotificationDetails(
       android: androidDetails,
@@ -84,32 +84,37 @@ class NotificationService {
 
   Future<void> scheduleDailyTip() async {
     var now = tz.TZDateTime.now(tz.local);
-    var scheduledDate =
-        tz.TZDateTime(tz.local, now.year, now.month, now.day, 10, 0);
+    var scheduledDate = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      10,
+      0,
+    );
 
-    // If it's already past 10 AM, schedule for tomorrow
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
 
-    const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
-      'daily_channel',
-      'Daily Style Tips',
-      importance: Importance.defaultImportance,
-      priority: Priority.defaultPriority,
-      icon: '@mipmap/ic_launcher',
-    );
+    const AndroidNotificationDetails androidDetails =
+        AndroidNotificationDetails(
+          'daily_channel',
+          'Daily Style Tips',
+          importance: Importance.defaultImportance,
+          priority: Priority.defaultPriority,
+          icon: '@mipmap/ic_launcher',
+        );
 
     const NotificationDetails details = NotificationDetails(
       android: androidDetails,
       iOS: DarwinNotificationDetails(),
     );
 
-    // Daily tip messages
     final tips = [
       'Try a new hairstyle today!',
       'Explore trending styles now!',
-      'Upgrade your look with AI!'
+      'Upgrade your look with AI!',
     ];
     final tipMessage = tips[now.day % tips.length];
 
@@ -129,16 +134,18 @@ class NotificationService {
   }
 
   Future<void> scheduleReminder() async {
-    // Trigger 5 minutes after uploading if they haven't generated yet
-    var scheduledDate = tz.TZDateTime.now(tz.local).add(const Duration(minutes: 5));
+    var scheduledDate = tz.TZDateTime.now(
+      tz.local,
+    ).add(const Duration(minutes: 5));
 
-    const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
-      'reminder_channel',
-      'Reminders',
-      importance: Importance.high,
-      priority: Priority.high,
-      icon: '@mipmap/ic_launcher',
-    );
+    const AndroidNotificationDetails androidDetails =
+        AndroidNotificationDetails(
+          'reminder_channel',
+          'Reminders',
+          importance: Importance.high,
+          priority: Priority.high,
+          icon: '@mipmap/ic_launcher',
+        );
 
     const NotificationDetails details = NotificationDetails(
       android: androidDetails,

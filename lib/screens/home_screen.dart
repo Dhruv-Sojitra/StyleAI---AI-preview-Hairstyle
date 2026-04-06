@@ -41,27 +41,39 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ],
         ),
         child: NavigationBar(
-          onDestinationSelected: (index) => setState(() => _selectedIndex = index),
+          onDestinationSelected: (index) =>
+              setState(() => _selectedIndex = index),
           selectedIndex: _selectedIndex,
           height: 70,
           elevation: 0,
           backgroundColor: Theme.of(context).cardTheme.color,
-          indicatorColor: DesignSystem.primaryGradientStart.withValues(alpha: 0.1),
+          indicatorColor: DesignSystem.primaryGradientStart.withValues(
+            alpha: 0.1,
+          ),
           labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
           destinations: const <Widget>[
             NavigationDestination(
               icon: Icon(Icons.grid_view_outlined, size: 24),
-              selectedIcon: Icon(Icons.grid_view_rounded, color: DesignSystem.primaryGradientStart),
+              selectedIcon: Icon(
+                Icons.grid_view_rounded,
+                color: DesignSystem.primaryGradientStart,
+              ),
               label: 'Styles',
             ),
             NavigationDestination(
               icon: Icon(Icons.history_outlined, size: 24),
-              selectedIcon: Icon(Icons.history_rounded, color: DesignSystem.primaryGradientStart),
+              selectedIcon: Icon(
+                Icons.history_rounded,
+                color: DesignSystem.primaryGradientStart,
+              ),
               label: 'History',
             ),
             NavigationDestination(
               icon: Icon(Icons.person_outline_rounded, size: 24),
-              selectedIcon: Icon(Icons.person_rounded, color: DesignSystem.primaryGradientStart),
+              selectedIcon: Icon(
+                Icons.person_rounded,
+                color: DesignSystem.primaryGradientStart,
+              ),
               label: 'Profile',
             ),
           ],
@@ -83,7 +95,13 @@ class _HairstyleDashboardState extends ConsumerState<HairstyleDashboard> {
   String _searchQuery = '';
   final TextEditingController _searchController = TextEditingController();
 
-  final List<String> _categories = ['All', 'Male', 'Female', 'Trending', 'Popular'];
+  final List<String> _categories = [
+    'All',
+    'Male',
+    'Female',
+    'Trending',
+    'Popular',
+  ];
 
   List<HairstyleModel> _getFilteredHairstyles() {
     return sampleHairstyles.where((style) {
@@ -97,8 +115,10 @@ class _HairstyleDashboardState extends ConsumerState<HairstyleDashboard> {
       } else {
         matchesCategory = style.gender == _selectedCategory.toLowerCase();
       }
-      
-      final matchesSearch = style.name.toLowerCase().contains(_searchQuery.toLowerCase());
+
+      final matchesSearch = style.name.toLowerCase().contains(
+        _searchQuery.toLowerCase(),
+      );
       return matchesCategory && matchesSearch;
     }).toList();
   }
@@ -133,7 +153,10 @@ class _HairstyleDashboardState extends ConsumerState<HairstyleDashboard> {
             surfaceTintColor: Colors.transparent,
             flexibleSpace: FlexibleSpaceBar(
               background: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 20,
+                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,18 +217,29 @@ class _HairstyleDashboardState extends ConsumerState<HairstyleDashboard> {
                     label: Text(category),
                     selected: isSelected,
                     onSelected: (selected) {
-                      if (selected) setState(() => _selectedCategory = category);
+                      if (selected)
+                        setState(() => _selectedCategory = category);
                     },
-                    selectedColor: DesignSystem.primaryGradientStart.withValues(alpha: 0.1),
+                    selectedColor: DesignSystem.primaryGradientStart.withValues(
+                      alpha: 0.1,
+                    ),
                     backgroundColor: theme.cardTheme.color,
                     labelStyle: TextStyle(
-                      color: isSelected ? DesignSystem.primaryGradientStart : theme.colorScheme.onSurface,
-                      fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                      color: isSelected
+                          ? DesignSystem.primaryGradientStart
+                          : theme.colorScheme.onSurface,
+                      fontWeight: isSelected
+                          ? FontWeight.bold
+                          : FontWeight.normal,
                     ),
                     side: BorderSide(
-                      color: isSelected ? DesignSystem.primaryGradientStart : Colors.transparent,
+                      color: isSelected
+                          ? DesignSystem.primaryGradientStart
+                          : Colors.transparent,
                     ),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     showCheckmark: false,
                   );
                 },
@@ -224,27 +258,25 @@ class _HairstyleDashboardState extends ConsumerState<HairstyleDashboard> {
           SliverPadding(
             padding: const EdgeInsets.all(20),
             sliver: SliverGrid(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  final style = hairstyles[index];
-                  return AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 400),
-                    child: HairstyleCard(
-                      key: ValueKey('${_selectedCategory}_${style.id}'),
-                      hairstyle: style,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => UploadScreen(selectedHairstyle: style),
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                },
-                childCount: hairstyles.length,
-              ),
+              delegate: SliverChildBuilderDelegate((context, index) {
+                final style = hairstyles[index];
+                return AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 400),
+                  child: HairstyleCard(
+                    key: ValueKey('${_selectedCategory}_${style.id}'),
+                    hairstyle: style,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              UploadScreen(selectedHairstyle: style),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              }, childCount: hairstyles.length),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: 0.75,

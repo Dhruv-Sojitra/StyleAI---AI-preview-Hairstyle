@@ -6,17 +6,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final falServiceProvider = Provider<FalService>((ref) => FalService());
 
 class FalService {
-  // Replace with actual FAL.ai API key
-  static const String _falApiKey = '7499fcd8-3614-4f76-8380-6ddcf81a852e:54fd3d36dac486228c2266d5376559ea'; 
-  
-  // Using Fast SDXL Image-to-Image for hairstyle editing
-  static const String _apiUrl = 'https://fal.run/fal-ai/fast-sdxl/image-to-image';
+  static const String _falApiKey =
+      '7499fcd8-3614-4f76-8380-6ddcf81a852e:54fd3d36dac486228c2266d5376559ea';
+
+  static const String _apiUrl =
+      'https://fal.run/fal-ai/fast-sdxl/image-to-image';
 
   Future<String> generateHairstyleWithFal({
     required String originalImageUrl,
     required String hairstyleName,
   }) async {
-    // 1. Validate Image URL
     if (originalImageUrl.isEmpty || !Uri.parse(originalImageUrl).isAbsolute) {
       debugPrint('❌ [FAL.ai] Invalid image URL: $originalImageUrl');
       throw Exception('Invalid image URL provided for generation.');
@@ -28,16 +27,18 @@ class FalService {
     while (attempts < maxAttempts) {
       attempts++;
       try {
-        debugPrint('🚀 [FAL.ai] Starting hairstyle generation (Attempt $attempts)...');
+        debugPrint(
+          '🚀 [FAL.ai] Starting hairstyle generation (Attempt $attempts)...',
+        );
         debugPrint('🔗 [FAL.ai] Input Image: $originalImageUrl');
         debugPrint('💇 [FAL.ai] Hairstyle: $hairstyleName');
 
-        // Strengthened prompt for identity preservation
-        final String prompt = attempts == 1 
-          ? "Edit the hairstyle of this person to $hairstyleName. Preserve exact face identity, facial features, skin texture, expression, pose, lighting, and background. Do NOT modify face shape or identity. Only change hair realistically with natural blending. Photorealistic."
-          : "Photo of a person with $hairstyleName hairstyle, high quality, natural hair blending, maintaining face identity.";
-        
-        const String negativePrompt = "cartoon, anime, painting, illustration, distorted face, different person, low quality";
+        final String prompt = attempts == 1
+            ? "Edit the hairstyle of this person to $hairstyleName. Preserve exact face identity, facial features, skin texture, expression, pose, lighting, and background. Do NOT modify face shape or identity. Only change hair realistically with natural blending. Photorealistic."
+            : "Photo of a person with $hairstyleName hairstyle, high quality, natural hair blending, maintaining face identity.";
+
+        const String negativePrompt =
+            "cartoon, anime, painting, illustration, distorted face, different person, low quality";
 
         debugPrint('📝 [FAL.ai] Prompt: $prompt');
 
@@ -51,8 +52,8 @@ class FalService {
             'image_url': originalImageUrl,
             'prompt': prompt,
             'negative_prompt': negativePrompt,
-            'strength': 0.45, // Reduced strength (0.4-0.6) for identity preservation
-            'guidance_scale': 4.0, // Guidance scale 3-5 as requested
+            'strength': 0.45,
+            'guidance_scale': 4.0,
             'image_size': 'square_hd',
             'num_inference_steps': 40,
             'enable_safety_checker': true,

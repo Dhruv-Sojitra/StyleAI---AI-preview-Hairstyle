@@ -1,4 +1,3 @@
-// File generated manually based on google-services.json
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
@@ -48,7 +47,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions windows = FirebaseOptions(
     apiKey: 'AIzaSyBXTkcojaOckQFXTHxxHCf6wk-GEBTLD2A',
-    appId: '1:151169884094:android:b4676f17e6dce3e7e963ef', // Reusing ID for dev; replace with Windows-specific app ID if auth issues persist
+    appId: '1:151169884094:android:b4676f17e6dce3e7e963ef',
     messagingSenderId: '151169884094',
     projectId: 'aihairstylist-25170',
     storageBucket: 'aihairstylist-25170.firebasestorage.app',

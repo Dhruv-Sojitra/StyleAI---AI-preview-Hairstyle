@@ -40,7 +40,7 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
   Future<void> _generate() async {
     if (_imageFile == null) return;
     setState(() => _isGenerating = true);
-    
+
     try {
       final auth = ref.read(authServiceProvider);
       final user = auth.currentUser;
@@ -48,9 +48,11 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
 
       final cloudinaryService = ref.read(cloudinaryServiceProvider);
       final freeAiService = ref.read(freeAiServiceProvider);
-      
-      final String originalUrl = await cloudinaryService.uploadToCloudinary(_imageFile!);
-      
+
+      final String originalUrl = await cloudinaryService.uploadToCloudinary(
+        _imageFile!,
+      );
+
       String? generatedUrl;
       bool isDemoMode = false;
 
@@ -59,9 +61,13 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
           imageBytes: await _imageFile!.readAsBytes(),
           hairstyle: widget.selectedHairstyle.name,
         );
-        generatedUrl = await cloudinaryService.uploadToCloudinary(generatedBytes);
+        generatedUrl = await cloudinaryService.uploadToCloudinary(
+          generatedBytes,
+        );
       } catch (e) {
-        debugPrint('⚠️ [Generation] HuggingFace failed, entering Demo Mode: $e');
+        debugPrint(
+          '⚠️ [Generation] HuggingFace failed, entering Demo Mode: $e',
+        );
         generatedUrl = originalUrl;
         isDemoMode = true;
       }
@@ -120,7 +126,12 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
               ),
             ),
             const SizedBox(height: 24),
-            Text('Choose Source', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+            Text(
+              'Choose Source',
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 32),
             Row(
               children: [
@@ -154,7 +165,11 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
     );
   }
 
-  Widget _buildSourceItem({required IconData icon, required String label, required VoidCallback onTap}) {
+  Widget _buildSourceItem({
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
     return StyleCard(
       onTap: onTap,
       padding: const EdgeInsets.symmetric(vertical: 24),
@@ -179,7 +194,11 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
           appBar: AppBar(
             title: const Text('Upload Photo'),
             leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios_new, color: theme.colorScheme.onSurface, size: 20),
+              icon: Icon(
+                Icons.arrow_back_ios_new,
+                color: theme.colorScheme.onSurface,
+                size: 20,
+              ),
               onPressed: () => Navigator.pop(context),
             ),
           ),
@@ -203,23 +222,30 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     StyleCard(
-                      color: DesignSystem.primaryGradientStart.withValues(alpha: 0.05),
+                      color: DesignSystem.primaryGradientStart.withValues(
+                        alpha: 0.05,
+                      ),
                       boxShadow: [],
                       child: Row(
                         children: [
-                          const Icon(Icons.lightbulb_outline, color: DesignSystem.primaryGradientStart),
+                          const Icon(
+                            Icons.lightbulb_outline,
+                            color: DesignSystem.primaryGradientStart,
+                          ),
                           const SizedBox(width: 16),
                           Expanded(
                             child: Text(
                               'Tip: Ensure good lighting and face the camera directly for the best AI result.',
-                              style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface),
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: theme.colorScheme.onSurface,
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
                     const SizedBox(height: 24),
-                    
+
                     GestureDetector(
                       onTap: _showImageSourceSheet,
                       child: Container(
@@ -228,7 +254,12 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
                           color: theme.cardTheme.color,
                           borderRadius: DesignSystem.outerBorderRadius,
                           boxShadow: DesignSystem.softShadow,
-                          border: Border.all(color: DesignSystem.primaryGradientStart.withValues(alpha: 0.1), width: 2),
+                          border: Border.all(
+                            color: DesignSystem.primaryGradientStart.withValues(
+                              alpha: 0.1,
+                            ),
+                            width: 2,
+                          ),
                         ),
                         clipBehavior: Clip.antiAlias,
                         child: _imageFile != null
@@ -241,7 +272,10 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
                                       gradient: LinearGradient(
                                         begin: Alignment.topCenter,
                                         end: Alignment.bottomCenter,
-                                        colors: [Colors.transparent, Colors.black.withValues(alpha: 0.5)],
+                                        colors: [
+                                          Colors.transparent,
+                                          Colors.black.withValues(alpha: 0.5),
+                                        ],
                                       ),
                                     ),
                                   ),
@@ -251,17 +285,34 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
                                     right: 0,
                                     child: Center(
                                       child: Container(
-                                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 20,
+                                          vertical: 10,
+                                        ),
                                         decoration: BoxDecoration(
                                           color: Colors.white,
-                                          borderRadius: BorderRadius.circular(30),
+                                          borderRadius: BorderRadius.circular(
+                                            30,
+                                          ),
                                         ),
                                         child: const Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            Icon(Icons.sync, size: 18, color: DesignSystem.primaryGradientStart),
+                                            Icon(
+                                              Icons.sync,
+                                              size: 18,
+                                              color: DesignSystem
+                                                  .primaryGradientStart,
+                                            ),
                                             SizedBox(width: 8),
-                                            Text('Change Photo', style: TextStyle(color: DesignSystem.primaryGradientStart, fontWeight: FontWeight.bold)),
+                                            Text(
+                                              'Change Photo',
+                                              style: TextStyle(
+                                                color: DesignSystem
+                                                    .primaryGradientStart,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -275,22 +326,42 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
                                   Container(
                                     padding: const EdgeInsets.all(24),
                                     decoration: BoxDecoration(
-                                      color: DesignSystem.primaryGradientStart.withValues(alpha: 0.1),
+                                      color: DesignSystem.primaryGradientStart
+                                          .withValues(alpha: 0.1),
                                       shape: BoxShape.circle,
                                     ),
-                                    child: const Icon(Icons.add_a_photo_outlined, size: 48, color: DesignSystem.primaryGradientStart),
+                                    child: const Icon(
+                                      Icons.add_a_photo_outlined,
+                                      size: 48,
+                                      color: DesignSystem.primaryGradientStart,
+                                    ),
                                   ),
                                   const SizedBox(height: 24),
-                                  Text('Tap to Take/Upload Photo', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+                                  Text(
+                                    'Tap to Take/Upload Photo',
+                                    style: theme.textTheme.titleMedium
+                                        ?.copyWith(fontWeight: FontWeight.bold),
+                                  ),
                                   const SizedBox(height: 8),
-                                  Text('High quality portraits work best', style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey)),
+                                  Text(
+                                    'High quality portraits work best',
+                                    style: theme.textTheme.bodySmall?.copyWith(
+                                      color: Colors.grey,
+                                    ),
+                                  ),
                                 ],
                               ),
                       ),
                     ),
-                    
+
                     const SizedBox(height: 24),
-                    Text('Transforming to:', style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold, color: Colors.grey)),
+                    Text(
+                      'Transforming to:',
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
+                      ),
+                    ),
                     const SizedBox(height: 12),
                     StyleCard(
                       padding: const EdgeInsets.all(12),
@@ -310,27 +381,43 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(widget.selectedHairstyle.name, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+                                Text(
+                                  widget.selectedHairstyle.name,
+                                  style: theme.textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                                 const SizedBox(height: 4),
                                 Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 2,
+                                  ),
                                   decoration: BoxDecoration(
-                                    color: DesignSystem.primaryGradientStart.withValues(alpha: 0.1),
+                                    color: DesignSystem.primaryGradientStart
+                                        .withValues(alpha: 0.1),
                                     borderRadius: BorderRadius.circular(6),
                                   ),
                                   child: Text(
                                     widget.selectedHairstyle.gender,
-                                    style: const TextStyle(fontSize: 10, color: DesignSystem.primaryGradientStart, fontWeight: FontWeight.bold),
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                      color: DesignSystem.primaryGradientStart,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          const Icon(Icons.auto_awesome, color: DesignSystem.primaryGradientStart),
+                          const Icon(
+                            Icons.auto_awesome,
+                            color: DesignSystem.primaryGradientStart,
+                          ),
                         ],
                       ),
                     ),
-                    
+
                     const SizedBox(height: 40),
                     StyleButton(
                       text: 'Magic Happen ✨',
@@ -344,7 +431,8 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
             ),
           ),
         ),
-        if (_isGenerating) const LoadingOverlay(message: 'Our AI is crafting your new look...'),
+        if (_isGenerating)
+          const LoadingOverlay(message: 'Our AI is crafting your new look...'),
       ],
     );
   }

@@ -28,36 +28,53 @@ class StyleButton extends StatelessWidget {
         gradient: isSecondary ? null : DesignSystem.primaryGradient,
         borderRadius: DesignSystem.outerBorderRadius,
         color: isSecondary ? Colors.transparent : null,
-        border: isSecondary ? Border.all(color: DesignSystem.primaryGradientStart, width: 2) : null,
+        border: isSecondary
+            ? Border.all(color: DesignSystem.primaryGradientStart, width: 2)
+            : null,
         boxShadow: isSecondary ? null : DesignSystem.premiumShadow,
       ),
       child: ElevatedButton(
-        onPressed: isLoading ? null : () {
-          HapticFeedback.lightImpact();
-          onPressed();
-        },
+        onPressed: isLoading
+            ? null
+            : () {
+                HapticFeedback.lightImpact();
+                onPressed();
+              },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
-          shape: RoundedRectangleBorder(borderRadius: DesignSystem.outerBorderRadius),
+          shape: RoundedRectangleBorder(
+            borderRadius: DesignSystem.outerBorderRadius,
+          ),
         ),
         child: isLoading
             ? const SizedBox(
                 height: 24,
                 width: 24,
-                child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                  strokeWidth: 2,
+                ),
               )
             : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   if (icon != null) ...[
-                    Icon(icon, color: isSecondary ? DesignSystem.primaryGradientStart : Colors.white, size: 20),
+                    Icon(
+                      icon,
+                      color: isSecondary
+                          ? DesignSystem.primaryGradientStart
+                          : Colors.white,
+                      size: 20,
+                    ),
                     const SizedBox(width: 8),
                   ],
                   Text(
                     text,
                     style: TextStyle(
-                      color: isSecondary ? DesignSystem.primaryGradientStart : Colors.white,
+                      color: isSecondary
+                          ? DesignSystem.primaryGradientStart
+                          : Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
@@ -92,17 +109,23 @@ class StyleCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: color ?? Theme.of(context).cardTheme.color,
-        borderRadius: BorderRadius.circular(borderRadius ?? DesignSystem.borderRadius),
+        borderRadius: BorderRadius.circular(
+          borderRadius ?? DesignSystem.borderRadius,
+        ),
         boxShadow: boxShadow ?? DesignSystem.softShadow,
       ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: onTap != null ? () {
-            HapticFeedback.selectionClick();
-            onTap!();
-          } : null,
-          borderRadius: BorderRadius.circular(borderRadius ?? DesignSystem.borderRadius),
+          onTap: onTap != null
+              ? () {
+                  HapticFeedback.selectionClick();
+                  onTap!();
+                }
+              : null,
+          borderRadius: BorderRadius.circular(
+            borderRadius ?? DesignSystem.borderRadius,
+          ),
           child: Padding(
             padding: padding ?? const EdgeInsets.all(DesignSystem.spacingMd),
             child: child,
@@ -151,7 +174,9 @@ class _StyleTextFieldState extends State<StyleTextField> {
             widget.label,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.8),
+              color: Theme.of(
+                context,
+              ).colorScheme.primary.withValues(alpha: 0.8),
             ),
           ),
         ),
@@ -162,11 +187,17 @@ class _StyleTextFieldState extends State<StyleTextField> {
           validator: widget.validator,
           decoration: InputDecoration(
             hintText: widget.hint,
-            prefixIcon: widget.prefixIcon != null ? Icon(widget.prefixIcon, size: 20) : null,
+            prefixIcon: widget.prefixIcon != null
+                ? Icon(widget.prefixIcon, size: 20)
+                : null,
             suffixIcon: widget.isPassword
                 ? IconButton(
-                    icon: Icon(_obscureText ? Icons.visibility_off : Icons.visibility, size: 20),
-                    onPressed: () => setState(() => _obscureText = !_obscureText),
+                    icon: Icon(
+                      _obscureText ? Icons.visibility_off : Icons.visibility,
+                      size: 20,
+                    ),
+                    onPressed: () =>
+                        setState(() => _obscureText = !_obscureText),
                   )
                 : null,
           ),
@@ -195,7 +226,9 @@ class ShimmerLoader extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.black.withValues(alpha: 0.05),
+        color: isDark
+            ? Colors.white.withValues(alpha: 0.05)
+            : Colors.black.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(borderRadius),
       ),
       child: ClipRRect(
@@ -213,7 +246,8 @@ class ShimmerAnimation extends StatefulWidget {
   State<ShimmerAnimation> createState() => _ShimmerAnimationState();
 }
 
-class _ShimmerAnimationState extends State<ShimmerAnimation> with SingleTickerProviderStateMixin {
+class _ShimmerAnimationState extends State<ShimmerAnimation>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
@@ -276,7 +310,9 @@ class LoadingOverlay extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(DesignSystem.primaryGradientStart),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    DesignSystem.primaryGradientStart,
+                  ),
                 ),
                 if (message != null) ...[
                   const SizedBox(height: 16),

@@ -25,7 +25,10 @@ class SettingsScreen extends ConsumerWidget {
           ListTile(
             title: const Text('Send Feedback'),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (_) => const FeedbackScreen()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const FeedbackScreen()),
+              );
             },
           ),
         ],

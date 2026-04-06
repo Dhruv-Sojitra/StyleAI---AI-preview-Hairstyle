@@ -19,7 +19,8 @@ class HairstyleCard extends StatefulWidget {
   State<HairstyleCard> createState() => _HairstyleCardState();
 }
 
-class _HairstyleCardState extends State<HairstyleCard> with SingleTickerProviderStateMixin {
+class _HairstyleCardState extends State<HairstyleCard>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
 
@@ -30,9 +31,10 @@ class _HairstyleCardState extends State<HairstyleCard> with SingleTickerProvider
       duration: const Duration(milliseconds: 150),
       vsync: this,
     );
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.95).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _scaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 0.95,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -66,8 +68,14 @@ class _HairstyleCardState extends State<HairstyleCard> with SingleTickerProvider
                         widget.hairstyle.imagePath,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) => Container(
-                          color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                          child: const Icon(Icons.broken_image_rounded, color: Colors.grey, size: 24),
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.surfaceContainerHighest,
+                          child: const Icon(
+                            Icons.broken_image_rounded,
+                            color: Colors.grey,
+                            size: 24,
+                          ),
                         ),
                       ),
                     ),
@@ -81,19 +89,26 @@ class _HairstyleCardState extends State<HairstyleCard> with SingleTickerProvider
                             color: DesignSystem.primaryGradientStart,
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(Icons.check, color: Colors.white, size: 16),
+                          child: const Icon(
+                            Icons.check,
+                            color: Colors.white,
+                            size: 16,
+                          ),
                         ),
                       ),
                   ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 12,
+                ),
                 child: Text(
                   widget.hairstyle.name,
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,

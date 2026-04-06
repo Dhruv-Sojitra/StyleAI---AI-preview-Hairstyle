@@ -3,13 +3,18 @@ import 'package:ai_hairstyle_preview_app/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final firestoreServiceProvider = Provider<FirestoreService>((ref) => FirestoreService());
+final firestoreServiceProvider = Provider<FirestoreService>(
+  (ref) => FirestoreService(),
+);
 
 class FirestoreService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> saveUser(UserModel user) async {
-    await _firestore.collection('users').doc(user.uid).set(user.toMap(), SetOptions(merge: true));
+    await _firestore
+        .collection('users')
+        .doc(user.uid)
+        .set(user.toMap(), SetOptions(merge: true));
   }
 
   Future<UserModel?> getUser(String uid) async {
@@ -20,7 +25,6 @@ class FirestoreService {
     return null;
   }
 
-  // -- History --
   Future<void> saveGenerationResult(GenerationResult result) async {
     await _firestore.collection('history').doc(result.id).set(result.toMap());
   }
@@ -31,23 +35,23 @@ class FirestoreService {
         .where('userId', isEqualTo: userId)
         .orderBy('timestamp', descending: true)
         .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => GenerationResult.fromMap(doc.data(), doc.id))
-            .toList());
+        .map(
+          (snapshot) => snapshot.docs
+              .map((doc) => GenerationResult.fromMap(doc.data(), doc.id))
+              .toList(),
+        );
   }
 
   Future<void> deleteHistoryItem(String id) async {
     await _firestore.collection('history').doc(id).delete();
   }
 
-  // -- Favorites --
   Future<void> toggleFavorite(String historyId, bool currentStatus) async {
     await _firestore.collection('history').doc(historyId).update({
       'isFavorite': !currentStatus,
     });
   }
-  
-  // -- Feedback --
+
   Future<void> submitFeedback(String userId, String message) async {
     await _firestore.collection('feedback').add({
       'userId': userId,

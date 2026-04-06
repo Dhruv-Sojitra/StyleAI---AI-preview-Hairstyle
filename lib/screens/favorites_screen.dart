@@ -24,7 +24,10 @@ class FavoritesScreen extends ConsumerWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('My Favorites', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text(
+          'My Favorites',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
@@ -47,7 +50,9 @@ class FavoritesScreen extends ConsumerWidget {
               return const Center(child: CircularProgressIndicator());
             }
 
-            final favorites = (snapshot.data ?? []).where((item) => item.isFavorite).toList();
+            final favorites = (snapshot.data ?? [])
+                .where((item) => item.isFavorite)
+                .toList();
 
             if (favorites.isEmpty) {
               return Center(
@@ -60,19 +65,38 @@ class FavoritesScreen extends ConsumerWidget {
                         color: Colors.redAccent.withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(Icons.favorite_rounded, size: 64, color: Colors.redAccent),
+                      child: const Icon(
+                        Icons.favorite_rounded,
+                        size: 64,
+                        color: Colors.redAccent,
+                      ),
                     ),
                     const SizedBox(height: 24),
-                    Text('No favorites yet', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+                    Text(
+                      'No favorites yet',
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     const SizedBox(height: 8),
-                    Text('Transformations you love will appear here.', style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey)),
+                    Text(
+                      'Transformations you love will appear here.',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: Colors.grey,
+                      ),
+                    ),
                   ],
                 ),
               );
             }
 
             return GridView.builder(
-              padding: EdgeInsets.fromLTRB(20, MediaQuery.of(context).padding.top + 70, 20, 20),
+              padding: EdgeInsets.fromLTRB(
+                20,
+                MediaQuery.of(context).padding.top + 70,
+                20,
+                20,
+              ),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 16,
@@ -101,7 +125,7 @@ class _FavoriteGridCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     return StyleCard(
       padding: EdgeInsets.zero,
       child: Stack(
@@ -110,7 +134,11 @@ class _FavoriteGridCard extends StatelessWidget {
           CachedNetworkImage(
             imageUrl: item.generatedImageUrl,
             fit: BoxFit.cover,
-            placeholder: (context, url) => const ShimmerLoader(width: double.infinity, height: double.infinity, borderRadius: 0),
+            placeholder: (context, url) => const ShimmerLoader(
+              width: double.infinity,
+              height: double.infinity,
+              borderRadius: 0,
+            ),
             errorWidget: (context, url, error) => Container(
               color: theme.colorScheme.surfaceContainerHighest,
               child: const Icon(Icons.broken_image_rounded, color: Colors.grey),
@@ -139,13 +167,20 @@ class _FavoriteGridCard extends StatelessWidget {
                 children: [
                   Text(
                     item.hairstyleName,
-                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     DateFormat('MMM d, yyyy').format(item.timestamp),
-                    style: TextStyle(color: Colors.white.withValues(alpha: 0.7), fontSize: 10),
+                    style: TextStyle(
+                      color: Colors.white.withValues(alpha: 0.7),
+                      fontSize: 10,
+                    ),
                   ),
                 ],
               ),
@@ -163,7 +198,11 @@ class _FavoriteGridCard extends StatelessWidget {
                   shape: BoxShape.circle,
                   border: Border.all(color: Colors.white10),
                 ),
-                child: const Icon(Icons.favorite_rounded, size: 16, color: Colors.redAccent),
+                child: const Icon(
+                  Icons.favorite_rounded,
+                  size: 16,
+                  color: Colors.redAccent,
+                ),
               ),
             ),
           ),

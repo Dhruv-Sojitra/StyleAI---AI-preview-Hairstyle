@@ -73,8 +73,15 @@ class ProfileScreen extends ConsumerWidget {
                         right: 0,
                         child: Container(
                           padding: const EdgeInsets.all(4),
-                          decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-                          child: const Icon(Icons.verified_rounded, color: Colors.blue, size: 24),
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.verified_rounded,
+                            color: Colors.blue,
+                            size: 24,
+                          ),
                         ),
                       ),
                     ],
@@ -82,17 +89,21 @@ class ProfileScreen extends ConsumerWidget {
                   const SizedBox(height: 16),
                   Text(
                     user.displayName ?? user.email?.split('@').first ?? 'User',
-                    style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+                    style: theme.textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Text(
                     user.email ?? '',
-                    style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: Colors.grey,
+                    ),
                   ),
                 ],
               ),
             ),
           ),
-          
+
           SliverToBoxAdapter(
             child: StreamBuilder<List<GenerationResult>>(
               stream: firestore.getUserHistory(user.uid),
@@ -113,9 +124,15 @@ class ProfileScreen extends ConsumerWidget {
                       Expanded(
                         child: _StatBox(
                           label: 'Favorites',
-                          value: '${history.where((item) => item.isFavorite).length}',
+                          value:
+                              '${history.where((item) => item.isFavorite).length}',
                           icon: Icons.favorite_rounded,
-                          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const FavoritesScreen())),
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const FavoritesScreen(),
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -129,40 +146,75 @@ class ProfileScreen extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 24),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
-                const Text('Settings & Preferences', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey)),
+                const Text(
+                  'Settings & Preferences',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey,
+                  ),
+                ),
                 const SizedBox(height: 16),
                 _ProfileTile(
                   icon: Icons.person_outline_rounded,
                   title: 'Edit Profile',
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfileScreen())),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const EditProfileScreen(),
+                    ),
+                  ),
                 ),
                 _ProfileTile(
                   icon: Icons.notifications_none_rounded,
                   title: 'Notifications',
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationScreen())),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NotificationScreen(),
+                    ),
+                  ),
                 ),
                 _ProfileTile(
-                  icon: themeMode == ThemeMode.dark ? Icons.dark_mode_rounded : Icons.light_mode_rounded,
+                  icon: themeMode == ThemeMode.dark
+                      ? Icons.dark_mode_rounded
+                      : Icons.light_mode_rounded,
                   title: 'Appearance',
                   trailing: Switch(
                     value: themeMode == ThemeMode.dark,
-                    onChanged: (_) => ref.read(themeProvider.notifier).toggleTheme(),
+                    onChanged: (_) =>
+                        ref.read(themeProvider.notifier).toggleTheme(),
                     activeThumbColor: DesignSystem.primaryGradientStart,
                   ),
                   onTap: () {},
                 ),
                 const SizedBox(height: 24),
-                const Text('More', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey)),
+                const Text(
+                  'More',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey,
+                  ),
+                ),
                 const SizedBox(height: 16),
                 _ProfileTile(
                   icon: Icons.help_outline_rounded,
                   title: 'Help & Support',
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const HelpSupportScreen())),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HelpSupportScreen(),
+                    ),
+                  ),
                 ),
                 _ProfileTile(
                   icon: Icons.info_outline_rounded,
                   title: 'About StyleAI',
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutScreen())),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AboutScreen(),
+                    ),
+                  ),
                 ),
                 _ProfileTile(
                   icon: Icons.logout_rounded,
@@ -171,7 +223,12 @@ class ProfileScreen extends ConsumerWidget {
                   onTap: () => _confirmLogout(context, ref),
                 ),
                 const SizedBox(height: 40),
-                const Center(child: Text('Version 2.0.0 (Premium Build)', style: TextStyle(color: Colors.grey, fontSize: 12))),
+                const Center(
+                  child: Text(
+                    'Version 2.0.0 (Premium Build)',
+                    style: TextStyle(color: Colors.grey, fontSize: 12),
+                  ),
+                ),
                 const SizedBox(height: 32),
               ]),
             ),
@@ -186,15 +243,26 @@ class ProfileScreen extends ConsumerWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Log Out'),
-        content: const Text('Are you sure you want to exit? We\'ll miss your transformations!'),
+        content: const Text(
+          'Are you sure you want to exit? We\'ll miss your transformations!',
+        ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
           TextButton(
             onPressed: () async {
               Navigator.pop(context);
               await ref.read(authServiceProvider).signOut();
             },
-            child: const Text('Log Out', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold)),
+            child: const Text(
+              'Log Out',
+              style: TextStyle(
+                color: Colors.redAccent,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ],
       ),
@@ -208,7 +276,12 @@ class _StatBox extends StatelessWidget {
   final IconData icon;
   final VoidCallback? onTap;
 
-  const _StatBox({required this.label, required this.value, required this.icon, this.onTap});
+  const _StatBox({
+    required this.label,
+    required this.value,
+    required this.icon,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -218,7 +291,10 @@ class _StatBox extends StatelessWidget {
         children: [
           Icon(icon, color: DesignSystem.primaryGradientStart, size: 24),
           const SizedBox(height: 12),
-          Text(value, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Text(
+            value,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
           Text(label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
         ],
       ),
@@ -233,7 +309,13 @@ class _ProfileTile extends StatelessWidget {
   final Widget? trailing;
   final bool isDestructive;
 
-  const _ProfileTile({required this.icon, required this.title, required this.onTap, this.trailing, this.isDestructive = false});
+  const _ProfileTile({
+    required this.icon,
+    required this.title,
+    required this.onTap,
+    this.trailing,
+    this.isDestructive = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -247,10 +329,18 @@ class _ProfileTile extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: isDestructive ? Colors.redAccent.withValues(alpha: 0.1) : DesignSystem.primaryGradientStart.withValues(alpha: 0.1),
+                color: isDestructive
+                    ? Colors.redAccent.withValues(alpha: 0.1)
+                    : DesignSystem.primaryGradientStart.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: Icon(icon, color: isDestructive ? Colors.redAccent : DesignSystem.primaryGradientStart, size: 20),
+              child: Icon(
+                icon,
+                color: isDestructive
+                    ? Colors.redAccent
+                    : DesignSystem.primaryGradientStart,
+                size: 20,
+              ),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -262,7 +352,12 @@ class _ProfileTile extends StatelessWidget {
                 ),
               ),
             ),
-            trailing ?? const Icon(Icons.chevron_right_rounded, color: Colors.grey, size: 20),
+            trailing ??
+                const Icon(
+                  Icons.chevron_right_rounded,
+                  color: Colors.grey,
+                  size: 20,
+                ),
           ],
         ),
       ),

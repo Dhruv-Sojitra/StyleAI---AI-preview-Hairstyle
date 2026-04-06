@@ -52,7 +52,10 @@ class HistoryScreen extends ConsumerWidget {
                 backgroundColor: Colors.transparent,
                 surfaceTintColor: Colors.transparent,
                 flexibleSpace: FlexibleSpaceBar(
-                  titlePadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                  titlePadding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 16,
+                  ),
                   centerTitle: false,
                   title: Text(
                     'My Makeovers',
@@ -72,15 +75,31 @@ class HistoryScreen extends ConsumerWidget {
                         Container(
                           padding: const EdgeInsets.all(32),
                           decoration: BoxDecoration(
-                            color: DesignSystem.primaryGradientStart.withValues(alpha: 0.1),
+                            color: DesignSystem.primaryGradientStart.withValues(
+                              alpha: 0.1,
+                            ),
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(Icons.history_toggle_off_rounded, size: 64, color: DesignSystem.primaryGradientStart),
+                          child: const Icon(
+                            Icons.history_toggle_off_rounded,
+                            size: 64,
+                            color: DesignSystem.primaryGradientStart,
+                          ),
                         ),
                         const SizedBox(height: 24),
-                        Text('No makeovers yet', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+                        Text(
+                          'No makeovers yet',
+                          style: theme.textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         const SizedBox(height: 8),
-                        Text('Your AI transformations will appear here.', style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey)),
+                        Text(
+                          'Your AI transformations will appear here.',
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: Colors.grey,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -89,19 +108,17 @@ class HistoryScreen extends ConsumerWidget {
                 SliverPadding(
                   padding: const EdgeInsets.all(20),
                   sliver: SliverGrid(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        final item = history[index];
-                        return _HistoryCard(item: item, firestore: firestore);
-                      },
-                      childCount: history.length,
-                    ),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 16,
-                      mainAxisSpacing: 16,
-                      childAspectRatio: 0.75,
-                    ),
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      final item = history[index];
+                      return _HistoryCard(item: item, firestore: firestore);
+                    }, childCount: history.length),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
+                          childAspectRatio: 0.75,
+                        ),
                   ),
                 ),
               const SliverPadding(padding: EdgeInsets.only(bottom: 24)),
@@ -122,7 +139,7 @@ class _HistoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     return StyleCard(
       padding: EdgeInsets.zero,
       child: Stack(
@@ -131,7 +148,11 @@ class _HistoryCard extends StatelessWidget {
           CachedNetworkImage(
             imageUrl: item.generatedImageUrl,
             fit: BoxFit.cover,
-            placeholder: (context, url) => const ShimmerLoader(width: double.infinity, height: double.infinity, borderRadius: 0),
+            placeholder: (context, url) => const ShimmerLoader(
+              width: double.infinity,
+              height: double.infinity,
+              borderRadius: 0,
+            ),
             errorWidget: (context, url, error) => Container(
               color: theme.colorScheme.surfaceContainerHighest,
               child: const Icon(Icons.broken_image_rounded, color: Colors.grey),
@@ -160,14 +181,21 @@ class _HistoryCard extends StatelessWidget {
                 children: [
                   Text(
                     item.hairstyleName,
-                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 2),
                   Text(
                     DateFormat('MMM d, yyyy').format(item.timestamp),
-                    style: TextStyle(color: Colors.white.withValues(alpha: 0.7), fontSize: 10),
+                    style: TextStyle(
+                      color: Colors.white.withValues(alpha: 0.7),
+                      fontSize: 10,
+                    ),
                   ),
                 ],
               ),
@@ -179,9 +207,12 @@ class _HistoryCard extends StatelessWidget {
             child: Row(
               children: [
                 _GlassAction(
-                  icon: item.isFavorite ? Icons.favorite : Icons.favorite_border,
+                  icon: item.isFavorite
+                      ? Icons.favorite
+                      : Icons.favorite_border,
                   color: item.isFavorite ? Colors.redAccent : Colors.white,
-                  onTap: () => firestore.toggleFavorite(item.id, item.isFavorite),
+                  onTap: () =>
+                      firestore.toggleFavorite(item.id, item.isFavorite),
                 ),
                 const SizedBox(width: 6),
                 _GlassAction(
@@ -204,13 +235,19 @@ class _HistoryCard extends StatelessWidget {
         title: const Text('Delete Transformation?'),
         content: const Text('This action cannot be undone.'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
           TextButton(
             onPressed: () {
               firestore.deleteHistoryItem(item.id);
               Navigator.pop(context);
             },
-            child: const Text('Delete', style: TextStyle(color: Colors.redAccent)),
+            child: const Text(
+              'Delete',
+              style: TextStyle(color: Colors.redAccent),
+            ),
           ),
         ],
       ),
@@ -223,7 +260,11 @@ class _GlassAction extends StatelessWidget {
   final Color color;
   final VoidCallback onTap;
 
-  const _GlassAction({required this.icon, required this.color, required this.onTap});
+  const _GlassAction({
+    required this.icon,
+    required this.color,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {

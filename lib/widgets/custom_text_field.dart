@@ -33,9 +33,9 @@ class CustomTextField extends StatelessWidget {
         hintText: hint,
         prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
         filled: true,
-        fillColor: theme.brightness == Brightness.light 
-          ? Colors.grey[100] 
-          : Colors.grey[900],
+        fillColor: theme.brightness == Brightness.light
+            ? Colors.grey[100]
+            : Colors.grey[900],
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide.none,

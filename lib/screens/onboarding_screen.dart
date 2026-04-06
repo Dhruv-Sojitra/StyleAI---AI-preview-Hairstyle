@@ -10,7 +10,10 @@ class OnboardingScreen extends StatelessWidget {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('seenOnboarding', true);
     if (context.mounted) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const AuthWrapper()));
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const AuthWrapper()),
+      );
     }
   }
 
@@ -22,11 +25,17 @@ class OnboardingScreen extends StatelessWidget {
         child: Column(
           children: [
             const Spacer(),
-            const Icon(Icons.face_retouching_natural, size: 120, color: Colors.purple),
+            const Icon(
+              Icons.face_retouching_natural,
+              size: 120,
+              color: Colors.purple,
+            ),
             const SizedBox(height: 32),
             Text(
               'Discover Your New Look',
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(
+                context,
+              ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),

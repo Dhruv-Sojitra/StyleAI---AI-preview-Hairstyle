@@ -2,7 +2,7 @@ class HairstyleModel {
   final String id;
   final String name;
   final String imagePath;
-  final String gender; // 'male' or 'female'
+  final String gender;
   final bool isTrending;
   final bool isPopular;
 
@@ -16,9 +16,7 @@ class HairstyleModel {
   });
 }
 
-// Mock Data with high-quality local assets
 final List<HairstyleModel> sampleHairstyles = [
-  // Male Hairstyles (18)
   HairstyleModel(
     id: '1',
     name: 'Crew Cut',
@@ -135,7 +133,6 @@ final List<HairstyleModel> sampleHairstyles = [
     imagePath: 'assets/hairstyles/male/bowl_cut.png',
   ),
 
-  // Female Hairstyles (12)
   HairstyleModel(
     id: '19',
     name: 'Long Layers',

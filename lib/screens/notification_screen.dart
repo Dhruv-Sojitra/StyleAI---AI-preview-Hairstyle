@@ -51,7 +51,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
       appBar: AppBar(
         title: const Text('Notifications'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new, color: theme.colorScheme.onSurface, size: 20),
+          icon: Icon(
+            Icons.arrow_back_ios_new,
+            color: theme.colorScheme.onSurface,
+            size: 20,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -62,47 +66,65 @@ class _NotificationScreenState extends State<NotificationScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Manage how you receive updates and tips.', style: TextStyle(color: Colors.grey)),
+                  const Text(
+                    'Manage how you receive updates and tips.',
+                    style: TextStyle(color: Colors.grey),
+                  ),
                   const SizedBox(height: 32),
-                  
+
                   _buildNotificationTile(
                     title: 'Allow Notifications',
                     subtitle: 'Master switch for all app notifications',
                     value: _allNotifications,
                     icon: Icons.notifications_active_outlined,
-                    onChanged: (val) => _updatePreference('notifications_enabled', val),
+                    onChanged: (val) =>
+                        _updatePreference('notifications_enabled', val),
                   ),
-                  
+
                   const SizedBox(height: 24),
-                  const Text('Preferences', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey)),
+                  const Text(
+                    'Preferences',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey,
+                    ),
+                  ),
                   const SizedBox(height: 16),
-                  
+
                   _buildNotificationTile(
                     title: 'Daily Style Tips',
                     subtitle: 'Receive inspiration for your next look',
                     value: _dailyTips && _allNotifications,
                     enabled: _allNotifications,
                     icon: Icons.lightbulb_outline_rounded,
-                    onChanged: (val) => _updatePreference('daily_tips_enabled', val),
+                    onChanged: (val) =>
+                        _updatePreference('daily_tips_enabled', val),
                   ),
-                  
+
                   const SizedBox(height: 16),
-                  
+
                   _buildNotificationTile(
                     title: 'Transformation Reminders',
-                    subtitle: 'Get notified when you leave a transformation pending',
+                    subtitle:
+                        'Get notified when you leave a transformation pending',
                     value: _reminders && _allNotifications,
                     enabled: _allNotifications,
                     icon: Icons.history_rounded,
-                    onChanged: (val) => _updatePreference('reminders_enabled', val),
+                    onChanged: (val) =>
+                        _updatePreference('reminders_enabled', val),
                   ),
-                  
+
                   const SizedBox(height: 48),
                   StyleCard(
-                    color: DesignSystem.primaryGradientStart.withValues(alpha: 0.05),
+                    color: DesignSystem.primaryGradientStart.withValues(
+                      alpha: 0.05,
+                    ),
                     child: const Row(
                       children: [
-                        Icon(Icons.info_outline_rounded, color: DesignSystem.primaryGradientStart),
+                        Icon(
+                          Icons.info_outline_rounded,
+                          color: DesignSystem.primaryGradientStart,
+                        ),
                         SizedBox(width: 16),
                         Expanded(
                           child: Text(
@@ -137,15 +159,28 @@ class _NotificationScreenState extends State<NotificationScreen> {
               color: DesignSystem.primaryGradientStart.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, color: enabled ? DesignSystem.primaryGradientStart : Colors.grey, size: 20),
+            child: Icon(
+              icon,
+              color: enabled ? DesignSystem.primaryGradientStart : Colors.grey,
+              size: 20,
+            ),
           ),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: TextStyle(fontWeight: FontWeight.bold, color: enabled ? null : Colors.grey)),
-                Text(subtitle, style: const TextStyle(fontSize: 11, color: Colors.grey)),
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: enabled ? null : Colors.grey,
+                  ),
+                ),
+                Text(
+                  subtitle,
+                  style: const TextStyle(fontSize: 11, color: Colors.grey),
+                ),
               ],
             ),
           ),

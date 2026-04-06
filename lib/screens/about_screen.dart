@@ -32,7 +32,6 @@ class AboutScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // App Icon with Shadow
               Container(
                 height: 120,
                 width: 120,
@@ -40,7 +39,9 @@ class AboutScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(30),
                   boxShadow: [
                     BoxShadow(
-                      color: DesignSystem.primaryGradientStart.withValues(alpha: 0.3),
+                      color: DesignSystem.primaryGradientStart.withValues(
+                        alpha: 0.3,
+                      ),
                       blurRadius: 30,
                       offset: const Offset(0, 10),
                     ),
@@ -51,15 +52,22 @@ class AboutScreen extends StatelessWidget {
                   child: Image.asset(
                     'assets/images/app_icon.png',
                     fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) =>
-                        const Icon(Icons.auto_awesome, size: 60, color: Colors.blue),
+                    errorBuilder: (context, error, stackTrace) => const Icon(
+                      Icons.auto_awesome,
+                      size: 60,
+                      color: Colors.blue,
+                    ),
                   ),
                 ),
               ),
               const SizedBox(height: 24),
               const Text(
                 'StyleAI',
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, letterSpacing: 1),
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1,
+                ),
               ),
               const Text(
                 'Smart Hairstyle Preview',
@@ -71,7 +79,11 @@ class AboutScreen extends StatelessWidget {
                 child: Text(
                   'StyleAI is an AI-powered mobile application that allows users to preview different hairstyles on their own photos using artificial intelligence.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16, height: 1.6, letterSpacing: 0.2),
+                  style: TextStyle(
+                    fontSize: 16,
+                    height: 1.6,
+                    letterSpacing: 0.2,
+                  ),
                 ),
               ),
               const SizedBox(height: 32),
@@ -84,7 +96,11 @@ class AboutScreen extends StatelessWidget {
               const SizedBox(height: 48),
               const Text(
                 'AI Powered Hair Transformation',
-                style: TextStyle(color: Colors.grey, fontSize: 12, letterSpacing: 1),
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 12,
+                  letterSpacing: 1,
+                ),
               ),
               const SizedBox(height: 8),
               const Text(
@@ -122,12 +138,16 @@ class AboutScreen extends StatelessWidget {
       runSpacing: 8,
       alignment: WrapAlignment.start,
       children: features
-          .map((feature) => Chip(
-                label: Text(feature, style: const TextStyle(fontSize: 12)),
-                backgroundColor: DesignSystem.primaryGradientStart.withValues(alpha: 0.1),
-                side: BorderSide.none,
-                labelStyle: TextStyle(color: DesignSystem.primaryGradientStart),
-              ))
+          .map(
+            (feature) => Chip(
+              label: Text(feature, style: const TextStyle(fontSize: 12)),
+              backgroundColor: DesignSystem.primaryGradientStart.withValues(
+                alpha: 0.1,
+              ),
+              side: BorderSide.none,
+              labelStyle: TextStyle(color: DesignSystem.primaryGradientStart),
+            ),
+          )
           .toList(),
     );
   }

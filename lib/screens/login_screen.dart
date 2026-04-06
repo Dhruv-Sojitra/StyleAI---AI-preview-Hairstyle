@@ -23,7 +23,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
       try {
-        await ref.read(authServiceProvider).signIn(
+        await ref
+            .read(authServiceProvider)
+            .signIn(
               _emailController.text.trim(),
               _passwordController.text.trim(),
             );
@@ -37,9 +39,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           message = 'Login Failed: ${e.message}';
         }
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(message)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(message)));
         }
       } catch (e) {
         if (mounted) {
@@ -59,9 +61,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: DesignSystem.primaryGradient,
-        ),
+        decoration: const BoxDecoration(gradient: DesignSystem.primaryGradient),
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
@@ -74,7 +74,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.auto_awesome, size: 48, color: DesignSystem.primaryGradientStart),
+                        const Icon(
+                          Icons.auto_awesome,
+                          size: 48,
+                          color: DesignSystem.primaryGradientStart,
+                        ),
                         const SizedBox(height: 16),
                         Text(
                           'StyleAI',
@@ -83,7 +87,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         const SizedBox(height: 8),
                         Text(
                           'Sign in to continue',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium?.copyWith(color: Colors.grey),
                         ),
                         const SizedBox(height: 40),
                         StyleTextField(
@@ -92,7 +98,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           controller: _emailController,
                           prefixIcon: Icons.email_outlined,
                           keyboardType: TextInputType.emailAddress,
-                          validator: (val) => val != null && val.contains('@') ? null : 'Enter valid email',
+                          validator: (val) => val != null && val.contains('@')
+                              ? null
+                              : 'Enter valid email',
                         ),
                         const SizedBox(height: 24),
                         StyleTextField(
@@ -101,7 +109,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           controller: _passwordController,
                           isPassword: true,
                           prefixIcon: Icons.lock_outline,
-                          validator: (val) => val != null && val.length >= 6 ? null : 'Password too short',
+                          validator: (val) => val != null && val.length >= 6
+                              ? null
+                              : 'Password too short',
                         ),
                         Align(
                           alignment: Alignment.centerRight,
@@ -109,7 +119,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             onPressed: () {},
                             child: Text(
                               'Forgot Password?',
-                              style: TextStyle(color: DesignSystem.primaryGradientStart.withValues(alpha: 0.8)),
+                              style: TextStyle(
+                                color: DesignSystem.primaryGradientStart
+                                    .withValues(alpha: 0.8),
+                              ),
                             ),
                           ),
                         ),
@@ -128,12 +141,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => const SignupScreen()),
+                                  MaterialPageRoute(
+                                    builder: (context) => const SignupScreen(),
+                                  ),
                                 );
                               },
                               child: const Text(
                                 'Sign Up',
-                                style: TextStyle(fontWeight: FontWeight.bold, color: DesignSystem.primaryGradientStart),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: DesignSystem.primaryGradientStart,
+                                ),
                               ),
                             ),
                           ],
@@ -159,7 +177,8 @@ class FadeInUp extends StatefulWidget {
   State<FadeInUp> createState() => _FadeInUpState();
 }
 
-class _FadeInUpState extends State<FadeInUp> with SingleTickerProviderStateMixin {
+class _FadeInUpState extends State<FadeInUp>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
@@ -171,12 +190,14 @@ class _FadeInUpState extends State<FadeInUp> with SingleTickerProviderStateMixin
       vsync: this,
       duration: const Duration(milliseconds: 800),
     );
-    _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
-    );
-    _slideAnimation = Tween<Offset>(begin: const Offset(0, 0.1), end: Offset.zero).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic),
-    );
+    _fadeAnimation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.1),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
     _controller.forward();
   }
 
@@ -190,10 +211,7 @@ class _FadeInUpState extends State<FadeInUp> with SingleTickerProviderStateMixin
   Widget build(BuildContext context) {
     return FadeTransition(
       opacity: _fadeAnimation,
-      child: SlideTransition(
-        position: _slideAnimation,
-        child: widget.child,
-      ),
+      child: SlideTransition(position: _slideAnimation, child: widget.child),
     );
   }
 }

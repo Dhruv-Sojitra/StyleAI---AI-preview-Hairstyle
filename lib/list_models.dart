@@ -4,10 +4,11 @@ import 'package:flutter/foundation.dart';
 
 void main() async {
   const apiKey = 'AIzaSyAnb0cygheOOQV8g1XjnHDit-h-u7iKe9Q';
-  
+
   try {
     debugPrint('Listing models for v1beta...');
-    final url = 'https://generativelanguage.googleapis.com/v1beta/models?key=$apiKey';
+    final url =
+        'https://generativelanguage.googleapis.com/v1beta/models?key=$apiKey';
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
@@ -18,11 +19,14 @@ void main() async {
         debugPrint('- ${m['name']} (${m['displayName']})');
       }
     } else {
-      debugPrint('Failed listing v1beta: ${response.statusCode} - ${response.body}');
+      debugPrint(
+        'Failed listing v1beta: ${response.statusCode} - ${response.body}',
+      );
     }
 
     debugPrint('\nListing models for v1...');
-    final urlV1 = 'https://generativelanguage.googleapis.com/v1/models?key=$apiKey';
+    final urlV1 =
+        'https://generativelanguage.googleapis.com/v1/models?key=$apiKey';
     final responseV1 = await http.get(Uri.parse(urlV1));
 
     if (responseV1.statusCode == 200) {
@@ -33,9 +37,10 @@ void main() async {
         debugPrint('- ${m['name']} (${m['displayName']})');
       }
     } else {
-      debugPrint('Failed listing v1: ${responseV1.statusCode} - ${responseV1.body}');
+      debugPrint(
+        'Failed listing v1: ${responseV1.statusCode} - ${responseV1.body}',
+      );
     }
-
   } catch (e) {
     debugPrint('Error: $e');
   }

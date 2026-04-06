@@ -17,13 +17,17 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
 
   Future<void> _submit() async {
     if (_controller.text.isEmpty) return;
-    
+
     setState(() => _isLoading = true);
     final user = ref.read(authServiceProvider).currentUser;
     if (user != null) {
-      await ref.read(firestoreServiceProvider).submitFeedback(user.uid, _controller.text);
+      await ref
+          .read(firestoreServiceProvider)
+          .submitFeedback(user.uid, _controller.text);
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Feedback Sent!')));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Feedback Sent!')));
         Navigator.pop(context);
       }
     }
@@ -47,7 +51,11 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
               ),
             ),
             const SizedBox(height: 16),
-            CustomButton(text: 'Submit Feedback', onPressed: _submit, isLoading: _isLoading),
+            CustomButton(
+              text: 'Submit Feedback',
+              onPressed: _submit,
+              isLoading: _isLoading,
+            ),
           ],
         ),
       ),

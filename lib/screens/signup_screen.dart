@@ -3,7 +3,7 @@ import 'package:ai_hairstyle_preview_app/models/user_model.dart';
 import 'package:ai_hairstyle_preview_app/services/firestore_service.dart';
 import 'package:ai_hairstyle_preview_app/utils/design_system.dart';
 import 'package:ai_hairstyle_preview_app/widgets/custom_widgets.dart';
-import 'package:ai_hairstyle_preview_app/screens/login_screen.dart'; // For FadeInUp
+import 'package:ai_hairstyle_preview_app/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,10 +26,13 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
       try {
-        final credential = await ref.read(authServiceProvider).signUp(
+        final credential = await ref
+            .read(authServiceProvider)
+            .signUp(
               _emailController.text.trim(),
               _passwordController.text.trim(),
-            ).timeout(const Duration(seconds: 15));
+            )
+            .timeout(const Duration(seconds: 15));
 
         final user = UserModel(
           uid: credential.user!.uid,
@@ -37,23 +40,29 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
           displayName: _nameController.text.trim(),
         );
 
-        await ref.read(firestoreServiceProvider).saveUser(user).timeout(const Duration(seconds: 10));
+        await ref
+            .read(firestoreServiceProvider)
+            .saveUser(user)
+            .timeout(const Duration(seconds: 10));
 
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Account Created! Please Login.')),
           );
-          Navigator.pop(context); 
+          Navigator.pop(context);
         }
-
       } on FirebaseAuthException catch (e) {
         String message = 'Signup Failed: ${e.message}';
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(message)));
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Signup Failed: ${e.toString()}')));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Signup Failed: ${e.toString()}')),
+          );
         }
       } finally {
         if (mounted) setState(() => _isLoading = false);
@@ -67,16 +76,18 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 20),
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.white,
+            size: 20,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
       ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: DesignSystem.primaryGradient,
-        ),
+        decoration: const BoxDecoration(gradient: DesignSystem.primaryGradient),
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
@@ -89,7 +100,11 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.person_add_outlined, size: 48, color: DesignSystem.primaryGradientStart),
+                        const Icon(
+                          Icons.person_add_outlined,
+                          size: 48,
+                          color: DesignSystem.primaryGradientStart,
+                        ),
                         const SizedBox(height: 16),
                         Text(
                           'Create Account',
@@ -98,7 +113,9 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                         const SizedBox(height: 8),
                         Text(
                           'Join StyleAI today',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium?.copyWith(color: Colors.grey),
                         ),
                         const SizedBox(height: 40),
                         StyleTextField(
@@ -106,7 +123,9 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                           hint: 'Enter your name',
                           controller: _nameController,
                           prefixIcon: Icons.person_outline,
-                          validator: (val) => val != null && val.isNotEmpty ? null : 'Name required',
+                          validator: (val) => val != null && val.isNotEmpty
+                              ? null
+                              : 'Name required',
                         ),
                         const SizedBox(height: 24),
                         StyleTextField(
@@ -115,7 +134,9 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                           controller: _emailController,
                           prefixIcon: Icons.email_outlined,
                           keyboardType: TextInputType.emailAddress,
-                          validator: (val) => val != null && val.contains('@') ? null : 'Enter valid email',
+                          validator: (val) => val != null && val.contains('@')
+                              ? null
+                              : 'Enter valid email',
                         ),
                         const SizedBox(height: 24),
                         StyleTextField(
@@ -124,7 +145,9 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                           controller: _passwordController,
                           isPassword: true,
                           prefixIcon: Icons.lock_outline,
-                          validator: (val) => val != null && val.length >= 6 ? null : 'Password too short (min 6 chars)',
+                          validator: (val) => val != null && val.length >= 6
+                              ? null
+                              : 'Password too short (min 6 chars)',
                         ),
                         const SizedBox(height: 40),
                         StyleButton(
@@ -141,7 +164,10 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                               onPressed: () => Navigator.pop(context),
                               child: const Text(
                                 'Login',
-                                style: TextStyle(fontWeight: FontWeight.bold, color: DesignSystem.primaryGradientStart),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: DesignSystem.primaryGradientStart,
+                                ),
                               ),
                             ),
                           ],

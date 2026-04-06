@@ -11,8 +11,7 @@ import 'package:timezone/data/latest_all.dart' as tz;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
-  // Initialize services early for native stability
+
   try {
     tz.initializeTimeZones();
     await NotificationService().initNotifications();
@@ -21,7 +20,6 @@ void main() async {
     );
   } catch (e) {
     debugPrint("Early initialization error: $e");
-    // We handle the UI part of the error in InitializationWrapper
   }
 
   runApp(const ProviderScope(child: StyleAIApp()));
@@ -65,11 +63,10 @@ class _InitializationWrapperState extends State<InitializationWrapper> {
 
   Future<void> _initialize() async {
     try {
-      // Small delay to ensure native channels are ready and UI is rendered
       await Future.delayed(const Duration(milliseconds: 500));
 
       setState(() => _status = "Checking Services...");
-      // Re-check or complete any pending init
+
       if (Firebase.apps.isEmpty) {
         await Firebase.initializeApp(
           options: DefaultFirebaseOptions.currentPlatform,
@@ -107,11 +104,22 @@ class _InitializationWrapperState extends State<InitializationWrapper> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.error_outline, color: Colors.redAccent, size: 80),
+                const Icon(
+                  Icons.error_outline,
+                  color: Colors.redAccent,
+                  size: 80,
+                ),
                 const SizedBox(height: 24),
-                const Text("Startup Failed", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                const Text(
+                  "Startup Failed",
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
                 const SizedBox(height: 12),
-                Text(_errorMessage, textAlign: TextAlign.center, style: const TextStyle(color: Colors.redAccent)),
+                Text(
+                  _errorMessage,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.redAccent),
+                ),
                 const SizedBox(height: 32),
                 ElevatedButton(
                   onPressed: () => _initialize(),
@@ -131,7 +139,10 @@ class _InitializationWrapperState extends State<InitializationWrapper> {
           children: [
             const CircularProgressIndicator(color: Colors.blueAccent),
             const SizedBox(height: 24),
-            Text(_status, style: const TextStyle(fontSize: 18, color: Colors.grey)),
+            Text(
+              _status,
+              style: const TextStyle(fontSize: 18, color: Colors.grey),
+            ),
           ],
         ),
       ),

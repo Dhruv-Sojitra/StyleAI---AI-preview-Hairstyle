@@ -22,9 +22,7 @@ class CustomButton extends StatelessWidget {
       child: isOutlined
           ? OutlinedButton(
               onPressed: isLoading ? null : onPressed,
-              child: isLoading
-                  ? const CircularProgressIndicator()
-                  : Text(text),
+              child: isLoading ? const CircularProgressIndicator() : Text(text),
             )
           : FilledButton(
               onPressed: isLoading ? null : onPressed,

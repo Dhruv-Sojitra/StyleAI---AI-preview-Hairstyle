@@ -5,13 +5,34 @@ import 'design_system.dart';
 class AppTheme {
   static TextTheme _buildTextTheme(TextTheme base) {
     return base.copyWith(
-      displayLarge: GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 32),
-      displayMedium: GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 28),
-      displaySmall: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 24),
-      headlineLarge: GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 22),
-      headlineMedium: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 20),
-      headlineSmall: GoogleFonts.poppins(fontWeight: FontWeight.w500, fontSize: 18),
-      titleLarge: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 18),
+      displayLarge: GoogleFonts.poppins(
+        fontWeight: FontWeight.bold,
+        fontSize: 32,
+      ),
+      displayMedium: GoogleFonts.poppins(
+        fontWeight: FontWeight.bold,
+        fontSize: 28,
+      ),
+      displaySmall: GoogleFonts.poppins(
+        fontWeight: FontWeight.w600,
+        fontSize: 24,
+      ),
+      headlineLarge: GoogleFonts.poppins(
+        fontWeight: FontWeight.bold,
+        fontSize: 22,
+      ),
+      headlineMedium: GoogleFonts.poppins(
+        fontWeight: FontWeight.w600,
+        fontSize: 20,
+      ),
+      headlineSmall: GoogleFonts.poppins(
+        fontWeight: FontWeight.w500,
+        fontSize: 18,
+      ),
+      titleLarge: GoogleFonts.poppins(
+        fontWeight: FontWeight.w600,
+        fontSize: 18,
+      ),
       titleMedium: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 16),
       titleSmall: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 14),
       bodyLarge: GoogleFonts.inter(fontSize: 16),
@@ -47,14 +68,18 @@ class AppTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        shape: RoundedRectangleBorder(borderRadius: DesignSystem.outerBorderRadius),
+        shape: RoundedRectangleBorder(
+          borderRadius: DesignSystem.outerBorderRadius,
+        ),
         elevation: 0,
         backgroundColor: DesignSystem.primaryGradientStart,
         foregroundColor: Colors.white,
       ),
     ),
     cardTheme: CardThemeData(
-      shape: RoundedRectangleBorder(borderRadius: DesignSystem.outerBorderRadius),
+      shape: RoundedRectangleBorder(
+        borderRadius: DesignSystem.outerBorderRadius,
+      ),
       elevation: 0,
       color: DesignSystem.cardLight,
       clipBehavior: Clip.antiAlias,
@@ -73,7 +98,10 @@ class AppTheme {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: DesignSystem.outerBorderRadius,
-        borderSide: const BorderSide(color: DesignSystem.primaryGradientStart, width: 2),
+        borderSide: const BorderSide(
+          color: DesignSystem.primaryGradientStart,
+          width: 2,
+        ),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: DesignSystem.outerBorderRadius,
@@ -119,14 +147,18 @@ class AppTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        shape: RoundedRectangleBorder(borderRadius: DesignSystem.outerBorderRadius),
+        shape: RoundedRectangleBorder(
+          borderRadius: DesignSystem.outerBorderRadius,
+        ),
         elevation: 0,
         backgroundColor: DesignSystem.primaryGradientStart,
         foregroundColor: Colors.white,
       ),
     ),
     cardTheme: CardThemeData(
-      shape: RoundedRectangleBorder(borderRadius: DesignSystem.outerBorderRadius),
+      shape: RoundedRectangleBorder(
+        borderRadius: DesignSystem.outerBorderRadius,
+      ),
       elevation: 0,
       color: DesignSystem.cardDark,
       clipBehavior: Clip.antiAlias,
@@ -145,7 +177,10 @@ class AppTheme {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: DesignSystem.outerBorderRadius,
-        borderSide: const BorderSide(color: DesignSystem.primaryGradientStart, width: 2),
+        borderSide: const BorderSide(
+          color: DesignSystem.primaryGradientStart,
+          width: 2,
+        ),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: DesignSystem.outerBorderRadius,

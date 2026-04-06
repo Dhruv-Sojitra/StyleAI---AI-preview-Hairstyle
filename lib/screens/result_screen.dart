@@ -33,7 +33,8 @@ class ResultScreen extends ConsumerStatefulWidget {
   ConsumerState<ResultScreen> createState() => _ResultScreenState();
 }
 
-class _ResultScreenState extends ConsumerState<ResultScreen> with SingleTickerProviderStateMixin {
+class _ResultScreenState extends ConsumerState<ResultScreen>
+    with SingleTickerProviderStateMixin {
   bool _savedToHistory = false;
   bool _showOriginal = false;
   late AnimationController _pulseController;
@@ -86,14 +87,20 @@ class _ResultScreenState extends ConsumerState<ResultScreen> with SingleTickerPr
         await Gal.putImageBytes(response.bodyBytes);
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Saved to Gallery ✨'), backgroundColor: Colors.green),
+            const SnackBar(
+              content: Text('Saved to Gallery ✨'),
+              backgroundColor: Colors.green,
+            ),
           );
         }
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Download failed'), backgroundColor: Colors.redAccent),
+          const SnackBar(
+            content: Text('Download failed'),
+            backgroundColor: Colors.redAccent,
+          ),
         );
       }
     }
@@ -104,9 +111,13 @@ class _ResultScreenState extends ConsumerState<ResultScreen> with SingleTickerPr
       final response = await http.get(Uri.parse(widget.generatedImageUrl));
       if (response.statusCode == 200) {
         final tempDir = Directory.systemTemp;
-        final file = File('${tempDir.path}/styleai_${DateTime.now().millisecondsSinceEpoch}.png');
+        final file = File(
+          '${tempDir.path}/styleai_${DateTime.now().millisecondsSinceEpoch}.png',
+        );
         await file.writeAsBytes(response.bodyBytes);
-        await Share.shareXFiles([XFile(file.path)], text: 'Rate my new look from StyleAI!');
+        await Share.shareXFiles([
+          XFile(file.path),
+        ], text: 'Rate my new look from StyleAI!');
       }
     } catch (e) {
       debugPrint('Error sharing: $e');
@@ -133,25 +144,29 @@ class _ResultScreenState extends ConsumerState<ResultScreen> with SingleTickerPr
       ),
       body: Stack(
         children: [
-          // Background Generated Image
           Positioned.fill(
             child: Container(
               color: Colors.black,
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 300),
-                child: _showOriginal 
-                  ? Image.file(widget.originalImage, key: const ValueKey('orig'), fit: BoxFit.cover)
-                  : CachedNetworkImage(
-                      key: const ValueKey('gen'),
-                      imageUrl: widget.generatedImageUrl,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => const Center(child: CircularProgressIndicator(color: Colors.white)),
-                    ),
+                child: _showOriginal
+                    ? Image.file(
+                        widget.originalImage,
+                        key: const ValueKey('orig'),
+                        fit: BoxFit.cover,
+                      )
+                    : CachedNetworkImage(
+                        key: const ValueKey('gen'),
+                        imageUrl: widget.generatedImageUrl,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => const Center(
+                          child: CircularProgressIndicator(color: Colors.white),
+                        ),
+                      ),
               ),
             ),
           ),
 
-          // Compare Toggle Button
           Positioned(
             top: MediaQuery.of(context).padding.top + 60,
             left: 0,
@@ -162,7 +177,10 @@ class _ResultScreenState extends ConsumerState<ResultScreen> with SingleTickerPr
                 onTapUp: (_) => setState(() => _showOriginal = false),
                 onTapCancel: () => setState(() => _showOriginal = false),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.black.withValues(alpha: 0.5),
                     borderRadius: BorderRadius.circular(20),
@@ -171,11 +189,21 @@ class _ResultScreenState extends ConsumerState<ResultScreen> with SingleTickerPr
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.compare_arrows, color: Colors.white, size: 16),
+                      const Icon(
+                        Icons.compare_arrows,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                       const SizedBox(width: 8),
                       Text(
-                        _showOriginal ? 'Release to see New' : 'Hold to see Before',
-                        style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                        _showOriginal
+                            ? 'Release to see New'
+                            : 'Hold to see Before',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),
@@ -184,7 +212,6 @@ class _ResultScreenState extends ConsumerState<ResultScreen> with SingleTickerPr
             ),
           ),
 
-          // Demo Mode Banner
           if (widget.isDemoMode)
             Positioned(
               top: MediaQuery.of(context).padding.top + 110,
@@ -192,22 +219,37 @@ class _ResultScreenState extends ConsumerState<ResultScreen> with SingleTickerPr
               right: 0,
               child: Center(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.orange.withValues(alpha: 0.9),
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
-                      BoxShadow(color: Colors.black.withValues(alpha: 0.2), blurRadius: 10, offset: const Offset(0, 4)),
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.2),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
+                      ),
                     ],
                   ),
                   child: const Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.info_outline_rounded, color: Colors.white, size: 16),
+                      Icon(
+                        Icons.info_outline_rounded,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                       SizedBox(width: 8),
                       Text(
                         'Preview generated (demo mode)',
-                        style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),
@@ -215,7 +257,6 @@ class _ResultScreenState extends ConsumerState<ResultScreen> with SingleTickerPr
               ),
             ),
 
-          // Bottom Info & Actions
           Positioned(
             bottom: 0,
             left: 0,
@@ -238,21 +279,39 @@ class _ResultScreenState extends ConsumerState<ResultScreen> with SingleTickerPr
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
-                        color: DesignSystem.primaryGradientStart.withValues(alpha: 0.2),
+                        color: DesignSystem.primaryGradientStart.withValues(
+                          alpha: 0.2,
+                        ),
                         borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: DesignSystem.primaryGradientStart.withValues(alpha: 0.5)),
+                        border: Border.all(
+                          color: DesignSystem.primaryGradientStart.withValues(
+                            alpha: 0.5,
+                          ),
+                        ),
                       ),
                       child: Text(
                         widget.hairstyle.name.toUpperCase(),
-                        style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 1),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 12),
                     const Text(
                       'Looks amazing on you! ✨',
-                      style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 32),
                     Row(
@@ -268,10 +327,14 @@ class _ResultScreenState extends ConsumerState<ResultScreen> with SingleTickerPr
                     ),
                     const SizedBox(height: 16),
                     TextButton(
-                      onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),
+                      onPressed: () =>
+                          Navigator.popUntil(context, (route) => route.isFirst),
                       child: Text(
                         'Back to Styles',
-                        style: TextStyle(color: Colors.white.withValues(alpha: 0.7), fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          color: Colors.white.withValues(alpha: 0.7),
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ],

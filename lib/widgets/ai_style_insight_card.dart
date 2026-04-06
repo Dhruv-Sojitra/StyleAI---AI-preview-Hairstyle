@@ -12,14 +12,15 @@ class AIStyleInsightCard extends StatefulWidget {
   State<AIStyleInsightCard> createState() => _AIStyleInsightCardState();
 }
 
-class _AIStyleInsightCardState extends State<AIStyleInsightCard> with SingleTickerProviderStateMixin {
+class _AIStyleInsightCardState extends State<AIStyleInsightCard>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
-  
+
   late HairstyleModel _recommendation;
   late String _groomingTip;
-  
+
   final List<String> _groomingTips = [
     'Use matte products for natural look',
     'Trim sides every 3 weeks',
@@ -36,13 +37,15 @@ class _AIStyleInsightCardState extends State<AIStyleInsightCard> with SingleTick
       duration: const Duration(milliseconds: 800),
     );
 
-    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
-    );
+    _fadeAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
 
-    _slideAnimation = Tween<Offset>(begin: const Offset(0, 0.1), end: Offset.zero).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic),
-    );
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.1),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
 
     _generateContent();
     _controller.forward();
@@ -50,9 +53,9 @@ class _AIStyleInsightCardState extends State<AIStyleInsightCard> with SingleTick
 
   void _generateContent() {
     final random = Random();
-    // Pick a random hairstyle for recommendation
+
     _recommendation = sampleHairstyles[random.nextInt(sampleHairstyles.length)];
-    // Pick a random grooming tip
+
     _groomingTip = _groomingTips[random.nextInt(_groomingTips.length)];
   }
 
@@ -65,7 +68,7 @@ class _AIStyleInsightCardState extends State<AIStyleInsightCard> with SingleTick
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     return FadeTransition(
       opacity: _fadeAnimation,
       child: SlideTransition(
@@ -87,12 +90,10 @@ class _AIStyleInsightCardState extends State<AIStyleInsightCard> with SingleTick
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Smart Recommendation Section
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
                     children: [
-                      // Preview Image
                       ClipRRect(
                         borderRadius: BorderRadius.circular(12),
                         child: Image.asset(
@@ -100,16 +101,17 @@ class _AIStyleInsightCardState extends State<AIStyleInsightCard> with SingleTick
                           width: 80,
                           height: 80,
                           fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) => Container(
-                            width: 80,
-                            height: 80,
-                            color: Colors.grey[300],
-                            child: const Icon(Icons.person),
-                          ),
+                          errorBuilder: (context, error, stackTrace) =>
+                              Container(
+                                width: 80,
+                                height: 80,
+                                color: Colors.grey[300],
+                                child: const Icon(Icons.person),
+                              ),
                         ),
                       ),
                       const SizedBox(width: 16),
-                      // Recommendation Text
+
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,7 +135,9 @@ class _AIStyleInsightCardState extends State<AIStyleInsightCard> with SingleTick
                             Text(
                               'This style enhances your features and suits your current hair texture perfectly.',
                               style: theme.textTheme.bodySmall?.copyWith(
-                                color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                                color: theme.colorScheme.onSurface.withValues(
+                                  alpha: 0.6,
+                                ),
                               ),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -144,8 +148,7 @@ class _AIStyleInsightCardState extends State<AIStyleInsightCard> with SingleTick
                     ],
                   ),
                 ),
-                
-                // Try Now Button Section
+
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: StyleButton(
@@ -155,18 +158,21 @@ class _AIStyleInsightCardState extends State<AIStyleInsightCard> with SingleTick
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => UploadScreen(selectedHairstyle: _recommendation),
+                          builder: (context) =>
+                              UploadScreen(selectedHairstyle: _recommendation),
                         ),
                       );
                     },
                   ),
                 ),
-                
+
                 const SizedBox(height: 16),
-                
-                // Smart Grooming Tip Section
+
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.5),
                     borderRadius: const BorderRadius.only(
